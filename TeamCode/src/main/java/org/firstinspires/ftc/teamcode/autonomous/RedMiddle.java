@@ -84,6 +84,35 @@ public class RedMiddle implements IAutonomousRunner {
                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(-90)))
                 .turn(Math.toRadians(-90))
                 .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(90)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+
+
+
+
+
+
+
+                 */
                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
                 .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))

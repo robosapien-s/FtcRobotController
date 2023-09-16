@@ -26,7 +26,7 @@ public class ExtensionWrapperDD {
     final int slideEncoderFactor = 20;
 
     boolean limit = true;
-
+    int deltaCount = 0;
     boolean guideOut = true;
 
 
@@ -59,10 +59,24 @@ public class ExtensionWrapperDD {
     int slowRange = 300;
     int slideOldPos = 0;
     public void PPArmMove(JoystickWrapper joystickWrapper) {
+        if (joystickWrapper.gamepad1GetRightBumperDown()) {
+            if (limit) {
+                limit = false;
+            } else {
+                limit = true;
+            }
+        }
 
         slidePos = (int) (slideMotorRight.getTargetPosition() + (joystickWrapper.gamepad1GetRightTrigger()-joystickWrapper.gamepad1GetLeftTrigger()) * slideEncoderFactor);
 
-
+        if (deltaCount == 0 && !limit) {
+            deltaCount=1;
+        }
+        if (deltaCount == 1 && limit) {
+            slideMotorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            slideMotorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            deltaCount = 0;
+        }
        /* if (joystickWrapper.gamepad2GetDDown()) {
             clawBase.setPower(-.5);
             servoPos = clawBase.getPosition() - .01;
@@ -120,12 +134,15 @@ public class ExtensionWrapperDD {
         }
 
 
-        if (slidePos<5) {
+        if (slidePos<5 && limit) {
             slidePos = 5;
         }
-        if (slidePos>4000) {
+        if (slidePos>4000 && limit) {
             slidePos = 4000;
         }
+
+        telemetry.addData("limit mode (true means limit IS there", limit);
+        telemetry.update();
 
 //        telemetry.addData("CurrentPosition:slide", slideMotorRight.getCurrentPosition());
 //        telemetry.addData("TargetPosition:slide", slideMotorRight.getTargetPosition());
@@ -186,17 +203,9 @@ public class ExtensionWrapperDD {
                 open = true;
             }
         }
-        if(joystickWrapper.gamepad1GetRightBumperDown()) {
-            if (guideOut) {
-                guideServo.setPosition(0);
-                guideOut = false;
-            } else {
-                guideServo.setPosition(.65);
-                guideOut = true;
-            }
-        }
 
     }
+
 
     public void UpdatePos() {
         slideMotorRight.setPower(1);

@@ -103,7 +103,11 @@ public class AutonomousWrapper {
         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
             runner = new RedHomeRunnerV1(drive, arm, opMode, this);
         }else if(location == VuforiaWebcamLocalization.ELocation.REDCORNER) {
+<<<<<<< Updated upstream
             runner = new RightTall2(drive, armA, opMode, this, telemetry,hardwareMap);
+=======
+            runner = new RedMiddle(drive, armA, opMode, this, telemetry);
+>>>>>>> Stashed changes
         }else if(location == VuforiaWebcamLocalization.ELocation.REDMIDDLE) {
             runner = new RightMiddle(drive, armA, opMode, this, telemetry,hardwareMap);
         }

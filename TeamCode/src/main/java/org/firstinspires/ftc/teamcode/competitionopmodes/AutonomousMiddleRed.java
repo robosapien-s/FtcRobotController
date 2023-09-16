@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
 import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
-@Disabled
-@Autonomous(name="Right Middle", group="Autonomous")
+
+@Autonomous(name="park", group="Autonomous")
 public class AutonomousMiddleRed extends LinearOpMode {
 
     @Override
@@ -17,7 +17,7 @@ public class AutonomousMiddleRed extends LinearOpMode {
 //        ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
 
 
-        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.REDMIDDLE ,this);
+        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.REDCORNER ,this);
 
         waitForStart();
 

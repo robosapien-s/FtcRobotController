@@ -10,7 +10,12 @@ buildscript {
         google()
     }
     dependencies {
+<<<<<<< Updated upstream
         classpath 'com.android.tools.build:gradle:8.1.1'
+=======
+        // Note for FTC Teams: Do not modify this yourself.
+        classpath 'com.android.tools.build:gradle:7.2.0'
+>>>>>>> Stashed changes
     }
 }
 
@@ -25,8 +30,4 @@ allprojects {
 
 repositories {
     mavenCentral()
-
-    flatDir {
-        dirs '../libs'
-    }
 }
