@@ -1,0 +1,213 @@
+Index: TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/RedMiddle.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.firstinspires.ftc.teamcode.autonomous;\n\nimport com.acmerobotics.roadrunner.geometry.Pose2d;\nimport com.acmerobotics.roadrunner.trajectory.Trajectory;\nimport com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;\n\nimport org.firstinspires.ftc.robotcore.external.Telemetry;\nimport org.firstinspires.ftc.teamcode.competitionopmodes.AutonomousWrapper;\nimport org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;\nimport org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;\nimport org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;\nimport org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperDD;\n\npublic class RedMiddle implements IAutonomousRunner {\n\n\n    TrajectorySequence trajectory1;\n    TrajectorySequence trajectory2;\n    TrajectorySequence trajectory3;\n    Trajectory trajectory4;\n    Trajectory trajectory5;\n    SampleMecanumDrive drive;\n    ExtensionWrapperDD armWrapper;\n    LinearOpMode linearOpMode;\n    AutonomousWrapper wrapper;\n    Telemetry telemetry;\n    int signalInt;\n\n    float robotHalfLength = 7;\n    float halfTile = 12;\n\n\n    public RedMiddle(SampleMecanumDrive inDrive, ExtensionWrapperDD inArm, LinearOpMode inLinearOpMode, AutonomousWrapper inWrapper, Telemetry inTelemetry) {\n        drive = inDrive;\n        armWrapper = inArm;\n        linearOpMode = inLinearOpMode;\n        wrapper = inWrapper;\n        telemetry = inTelemetry;\n    }\n\n    @Override\n    public void run() {\n\n        Pose2d startPose = new Pose2d(36, 62, Math.toRadians(-90));\n\n        drive.setPoseEstimate(startPose);\n\n\n        signalInt = wrapper.initDetection.signalInt;\n\n        telemetry.addData(\"Int = \", signalInt);\n        telemetry.update();\n\n        trajectory1 = drive.trajectorySequenceBuilder(new Pose2d(36, 62, Math.toRadians(-90)))\n                .UNSTABLE_addTemporalMarkerOffset(0, () -> {\n//                    armWrapper.clawServo.setPosition(.5);\n                })\n                .waitSeconds(1)\n                /*.turn(Math.toRadians(45))\n                .lineToLinearHeading(new Pose2d(60,60,Math.toRadians(-90)))\n                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(-90)))\n                .turn(Math.toRadians(-90))\n                .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(90)))\n                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))\n                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))\n                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))\n                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))\n\n                .turn(Math.toRadians(90))\n                .forward(30)\n                .turn(Math.toRadians(90))\n                .forward(30)\n                .turn(Math.toRadians(90))*/\n                .lineToLinearHeading(new Pose2d(36,36,Math.toRadians(-90)))\n                .lineToLinearHeading(new Pose2d(60,36,Math.toRadians(-90)))\n                .build();\n        trajectory2 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))\n                .UNSTABLE_addTemporalMarkerOffset(0, () -> {\n//                    armWrapper.clawServo.setPosition(.5);\n                })\n                .waitSeconds(1)\n                /*.turn(Math.toRadians(45))\n                .lineToLinearHeading(new Pose2d(60,60,Math.toRadians(-90)))\n                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(-90)))\n                .turn(Math.toRadians(-90))\n                .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(90)))\n                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))\n                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))\n                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))\n                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))\n\n                /*.turn(Math.toRadians(90))\n                .forward(30)\n                .turn(Math.toRadians(90))\n                .forward(30)\n                .turn(Math.toRadians(90))*/\n                .lineToLinearHeading(new Pose2d(36,36,Math.toRadians(-90)))\n                .build();\n        trajectory3 = drive.trajectorySequenceBuilder(new Pose2d(36, 60, Math.toRadians(-90)))\n                .UNSTABLE_addTemporalMarkerOffset(0, () -> {\n//                    armWrapper.clawServo.setPosition(.5);\n                })\n                .waitSeconds(1)\n                /*.turn(Math.toRadians(45))\n                .lineToLinearHeading(new Pose2d(60,60,Math.toRadians(-90)))\n                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(-90)))\n                .turn(Math.toRadians(-90))\n                .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(90)))\n                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))\n                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))\n                .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))\n                .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(-90)))\n\n                /*.turn(Math.toRadians(90))\n                .forward(30)\n                .turn(Math.toRadians(90))\n                .forward(30)\n                .turn(Math.toRadians(90))*/\n                .lineToLinearHeading(new Pose2d(36,36,Math.toRadians(-90)))\n                .lineToLinearHeading(new Pose2d(12,36,Math.toRadians(-90)))\n                .build();\n\n        if(signalInt==0){\n            drive.followTrajectorySequence(trajectory3);\n        }else if(signalInt==1){\n            drive.followTrajectorySequence(trajectory2);\n        }else{\n            drive.followTrajectorySequence(trajectory1);\n        }\n\n\n    }\n\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/RedMiddle.java b/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/RedMiddle.java
+--- a/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/RedMiddle.java	(revision b5f3d043f3501e893c328965958169bb73176657)
++++ b/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/RedMiddle.java	(date 1686409553784)
+@@ -84,6 +84,35 @@
+                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(-90)))
+                 .turn(Math.toRadians(-90))
+                 .lineToLinearHeading(new Pose2d(48,12,Math.toRadians(90)))
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++                
++
++
++
++
++
++
++
++
++                 */
+                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+                 .lineToLinearHeading(new Pose2d(24,12,Math.toRadians(90)))
+                 .lineToLinearHeading(new Pose2d(60,12,Math.toRadians(0)))
+Index: TeamCode/src/main/java/org/firstinspires/ftc/teamcode/competitionopmodes/AutonomousWrapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.firstinspires.ftc.teamcode.competitionopmodes;\n\nimport com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;\nimport com.qualcomm.robotcore.hardware.DcMotor;\nimport com.qualcomm.robotcore.hardware.HardwareMap;\n\nimport org.firstinspires.ftc.robotcore.external.Telemetry;\nimport org.firstinspires.ftc.teamcode.autonomous.BlueCarouselRunnerV2;\nimport org.firstinspires.ftc.teamcode.autonomous.BlueCorner;\nimport org.firstinspires.ftc.teamcode.autonomous.BlueHomeRunner;\nimport org.firstinspires.ftc.teamcode.autonomous.BlueMiddle;\nimport org.firstinspires.ftc.teamcode.autonomous.IAutonomousRunner;\nimport org.firstinspires.ftc.teamcode.autonomous.LeftMiddle;\nimport org.firstinspires.ftc.teamcode.autonomous.LeftMiddle2;\nimport org.firstinspires.ftc.teamcode.autonomous.LeftTall;\nimport org.firstinspires.ftc.teamcode.autonomous.RedCarouselRunnerV2;\nimport org.firstinspires.ftc.teamcode.autonomous.RedCorner;\nimport org.firstinspires.ftc.teamcode.autonomous.RedHomeRunnerV1;\nimport org.firstinspires.ftc.teamcode.autonomous.RedMiddle;\nimport org.firstinspires.ftc.teamcode.autonomous.RightMiddle;\nimport org.firstinspires.ftc.teamcode.autonomous.RightTall;\nimport org.firstinspires.ftc.teamcode.wrappers.ArmWrapper;\nimport org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;\nimport org.firstinspires.ftc.teamcode.wrappers.ExtensionArmWrapper;\nimport org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperCompetition;\nimport org.firstinspires.ftc.teamcode.wrappers.ExtensionWrapperDD;\nimport org.firstinspires.ftc.teamcode.wrappers.OpenCvDetection;\nimport org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;\nimport org.firstinspires.ftc.teamcode.testopmodes.AprilTagAutonomousInitDetectionExample;\n\nimport org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;\n\n\npublic class AutonomousWrapper {\n\n\n\n    SampleMecanumDrive roadRunner;\n    DrivingWrapper driver;\n    ExtensionWrapperDD armA;\n    double speed = .25; //Unused\n    double rotSpeed = .25; //Unused\n    HardwareMap hardwareMap;\n    Telemetry telemetry;\n\n    public DcMotor crMotor;\n\n    public OpenCvDetection OpenCVWrapper;\n    public AprilTagAutonomousInitDetectionExample initDetection;\n\n    SampleMecanumDrive drive;\n\n    IAutonomousRunner runner = null;\n\n    int signalInt;\n\n\n\n    public AutonomousWrapper(HardwareMap map, Telemetry inTelemetry, VuforiaWebcamLocalization.ELocation location,LinearOpMode opMode){\n        hardwareMap = map;\n        telemetry = inTelemetry;\n        roadRunner = new SampleMecanumDrive(hardwareMap);\n//        crMotor  = hardwareMap.get(DcMotor.class, \"carouselMotor\");\n        init(location,opMode);\n    }\n\n    public void init(VuforiaWebcamLocalization.ELocation location,LinearOpMode opMode){\n\n\n\n        driver = new DrivingWrapper(hardwareMap,telemetry);\n        armA = new ExtensionWrapperDD(hardwareMap, telemetry);\n\n        armA.rightServo.setPosition(.9);\n        armA.leftServo.setPosition(0.1);\n\n\n        ArmWrapper arm = null;\n\n        initDetection = new AprilTagAutonomousInitDetectionExample(telemetry,hardwareMap,this,opMode);\n        OpenCVWrapper = new OpenCvDetection(telemetry, hardwareMap);\n\n\n//        OpenCVWrapper.init(true);\n        initDetection.run(true);\n\n        runner = null;\n\n        drive = new SampleMecanumDrive(hardwareMap);\n\n        telemetry.addData(\"barcode\", OpenCVWrapper.barcodeInt);\n        if(location == VuforiaWebcamLocalization.ELocation.BLUECAROUSEL){\n            runner = new LeftMiddle(drive, armA, opMode, this, telemetry,hardwareMap);\n        }else if(location == VuforiaWebcamLocalization.ELocation.BLUEHOME) {\n            runner = new RightTall(drive, armA, opMode, this, telemetry,hardwareMap);\n        }else if(location == VuforiaWebcamLocalization.ELocation.BLUECORNER) {\n            runner = new BlueCorner(drive, armA, opMode, this,telemetry,hardwareMap);//Actually just parking Autonomous (Non deadwheel)\n        }else if(location == VuforiaWebcamLocalization.ELocation.BLUEMIDDLE) {\n            runner = new LeftMiddle2(drive, armA, opMode, this, telemetry,hardwareMap);\n        }else if(location == VuforiaWebcamLocalization.ELocation.REDCAROUSEL) {\n            runner = new LeftTall(drive, armA, opMode, this, telemetry,hardwareMap);\n        }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {\n            runner = new RedHomeRunnerV1(drive, arm, opMode, this);\n        }else if(location == VuforiaWebcamLocalization.ELocation.REDCORNER) {\n            runner = new RedCorner(drive, arm, opMode, this);\n        }else if(location == VuforiaWebcamLocalization.ELocation.REDMIDDLE) {\n            runner = new RightMiddle(drive, armA, opMode, this, telemetry,hardwareMap);\n        }\n    }\n    public void RunAutonomous() {\n\n\n//        telemetry.addData(\"Location\" ,location.toString());\n//        telemetry.addData(\"Barcode\", OpenCVWrapper.barcodeInt);\n\n\n        telemetry.update();\n\n\n        runner.run();\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/competitionopmodes/AutonomousWrapper.java b/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/competitionopmodes/AutonomousWrapper.java
+--- a/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/competitionopmodes/AutonomousWrapper.java	(revision b5f3d043f3501e893c328965958169bb73176657)
++++ b/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/competitionopmodes/AutonomousWrapper.java	(date 1682100977386)
+@@ -102,7 +102,7 @@
+         }else if(location == VuforiaWebcamLocalization.ELocation.REDHOME) {
+             runner = new RedHomeRunnerV1(drive, arm, opMode, this);
+         }else if(location == VuforiaWebcamLocalization.ELocation.REDCORNER) {
+-            runner = new RedCorner(drive, arm, opMode, this);
++            runner = new RedMiddle(drive, armA, opMode, this, telemetry);
+         }else if(location == VuforiaWebcamLocalization.ELocation.REDMIDDLE) {
+             runner = new RightMiddle(drive, armA, opMode, this, telemetry,hardwareMap);
+         }
+Index: TeamCode/src/main/java/org/firstinspires/ftc/teamcode/competitionopmodes/AutonomousMiddleRed.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.firstinspires.ftc.teamcode.competitionopmodes;\n\nimport com.qualcomm.robotcore.eventloop.opmode.Autonomous;\nimport com.qualcomm.robotcore.eventloop.opmode.Disabled;\nimport com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;\n\nimport org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;\nimport org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;\n@Disabled\n@Autonomous(name=\"Right Middle\", group=\"Autonomous\")\npublic class AutonomousMiddleRed extends LinearOpMode {\n\n    @Override\n    public void runOpMode() {\n\n        DrivingWrapper driver = new DrivingWrapper(hardwareMap,telemetry);\n//        ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);\n\n\n        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.REDMIDDLE ,this);\n\n        waitForStart();\n\n\n        if(opModeIsActive()) {\n            autonomousWrapper.RunAutonomous();\n        }\n\n\n        telemetry.addData(\"status: \", \"done\");\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/competitionopmodes/AutonomousMiddleRed.java b/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/competitionopmodes/AutonomousMiddleRed.java
+--- a/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/competitionopmodes/AutonomousMiddleRed.java	(revision b5f3d043f3501e893c328965958169bb73176657)
++++ b/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/competitionopmodes/AutonomousMiddleRed.java	(date 1682101403234)
+@@ -6,8 +6,8 @@
+ 
+ import org.firstinspires.ftc.teamcode.testopmodes.VuforiaWebcamLocalization;
+ import org.firstinspires.ftc.teamcode.wrappers.DrivingWrapper;
+-@Disabled
+-@Autonomous(name="Right Middle", group="Autonomous")
++
++@Autonomous(name="park", group="Autonomous")
+ public class AutonomousMiddleRed extends LinearOpMode {
+ 
+     @Override
+@@ -17,7 +17,7 @@
+ //        ArmWrapper arm = new ArmWrapper(hardwareMap, telemetry);
+ 
+ 
+-        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.REDMIDDLE ,this);
++        AutonomousWrapper autonomousWrapper = new AutonomousWrapper(hardwareMap, telemetry,VuforiaWebcamLocalization.ELocation.REDCORNER ,this);
+ 
+         waitForStart();
+ 
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/**\n * Top-level build file for ftc_app project.\n *\n * It is extraordinarily rare that you will ever need to edit this file.\n */\n\nbuildscript {\n    repositories {\n        mavenCentral()\n        google()\n    }\n    dependencies {\n        classpath 'com.android.tools.build:gradle:8.0.0'\n    }\n}\n\n// This is now required because aapt2 has to be downloaded from the\n// google() repository beginning with version 3.2 of the Android Gradle Plugin\nallprojects {\n    repositories {\n        mavenCentral()\n        google()\n    }\n}\n\nrepositories {\n    mavenCentral()\n\n    flatDir {\n        dirs '../libs'\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle b/build.gradle
+--- a/build.gradle	(revision b5f3d043f3501e893c328965958169bb73176657)
++++ b/build.gradle	(date 1694872268921)
+@@ -10,7 +10,7 @@
+         google()
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:8.0.0'
++        classpath 'com.android.tools.build:gradle:8.1.1'
+     }
+ }
+ 
+Index: TeamCode/src/main/java/org/firstinspires/ftc/teamcode/wrappers/ExtensionWrapperDD.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.firstinspires.ftc.teamcode.wrappers;\n\n\nimport com.qualcomm.robotcore.hardware.DcMotor;\nimport com.qualcomm.robotcore.hardware.DcMotorEx;\nimport com.qualcomm.robotcore.hardware.DcMotorSimple;\nimport com.qualcomm.robotcore.hardware.HardwareMap;\nimport com.qualcomm.robotcore.hardware.Servo;\n\nimport org.firstinspires.ftc.robotcore.external.Telemetry;\n\npublic class ExtensionWrapperDD {\n    HardwareMap hardwareMap;\n    Telemetry telemetry;\n    //DcMotor bottomMotor;\n    //DcMotor topMotor;\n    public Servo leftServo; //1\n    public Servo rightServo; //0\n\n    public Servo guideServo; //0 expansion\n    DcMotorEx slideMotorRight; //0 expansion\n    DcMotorEx slideMotorLeft; //1 expansion\n    double leftSlideFactor = 0.98;\n    public Integer slidePos = 0;\n    int Ratio = 28;\n    final int slideEncoderFactor = 20;\n\n    boolean limit = true;\n\n    boolean guideOut = true;\n\n\n    double servoPos = 0.5;\n    double currentRotation;\n    double MotorTicks = ((((1+(46/17))) * (1+(46/11))) * 28);\n\n\n    boolean open = true;\n\n    public ExtensionWrapperDD(HardwareMap inHardwareMap, Telemetry inTelemetry) {\n        hardwareMap = inHardwareMap;\n        telemetry = inTelemetry;\n\n        //bottomMotor  = hardwareMap.get(tDcMotor.class, \"bottomMotor\");\n        //topMotor  = hardwareMap.get(DcMotor.class, \"topMotor\");\n        leftServo = hardwareMap.get(Servo.class, \"leftServo\");\n        rightServo = hardwareMap.get(Servo.class, \"rightServo\");\n        guideServo = hardwareMap.get(Servo.class, \"guideServo\");\n        slideMotorLeft = hardwareMap.get(DcMotorEx.class, \"slideMotorLeft\");\n        slideMotorRight = hardwareMap.get(DcMotorEx.class, \"slideMotorRight\");\n        slideMotorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);\n        slideMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);\n        slideMotorLeft.setTargetPosition(0);\n        slideMotorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);\n        slideMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);\n        slideMotorRight.setTargetPosition(0);\n    }\n    double N = 10;\n    int slowRange = 300;\n    int slideOldPos = 0;\n    public void PPArmMove(JoystickWrapper joystickWrapper) {\n\n        slidePos = (int) (slideMotorRight.getTargetPosition() + (joystickWrapper.gamepad1GetRightTrigger()-joystickWrapper.gamepad1GetLeftTrigger()) * slideEncoderFactor);\n\n\n       /* if (joystickWrapper.gamepad2GetDDown()) {\n            clawBase.setPower(-.5);\n            servoPos = clawBase.getPosition() - .01;\n        }\n        if(joystickWrapper.gamepad2GetDUp()) {\n            servoPos = clawBase.getPosition();\n\n        }*/\n\n        //clawBase.setPower(joystickWrapper.gamepad1GetLeftStickY());\n\n        if (joystickWrapper.gamepad1GetA()) {\n            slidePos = 70;\n            if (guideServo.getPosition() > 0.06) {\n                guideServo.setPosition(0.05);\n            }\n        }else if (joystickWrapper.gamepad1GetX()) {\n            slidePos = 220;\n            if (guideServo.getPosition() > 0.06) {\n                guideServo.setPosition(0.05);\n            }\n        }\n        else if (joystickWrapper.gamepad1GetY()) {\n            slidePos = 390;\n            if (guideServo.getPosition() > 0.06) {\n                guideServo.setPosition(0.05);\n            }\n        }else if (joystickWrapper.gamepad1GetB()) {\n            slidePos = 550;\n            if (guideServo.getPosition() > 0.06) {\n                guideServo.setPosition(0.05);\n            }\n        }\n        if (joystickWrapper.gamepad1GetDDown()) {\n            slidePos = 5;\n            if (guideServo.getPosition() > 0.06) {\n                guideServo.setPosition(0.05);\n            }\n        }else if (joystickWrapper.gamepad1GetDLeft()) {\n            slidePos = 1670;\n            if (guideServo.getPosition() > 0.06) {\n                guideServo.setPosition(0.05);\n            }\n        }\n        else if (joystickWrapper.gamepad1GetDUp()) {\n            slidePos = 2800;\n            if (guideServo.getPosition() < 0.65) {\n                guideServo.setPosition(.7);\n            }\n        }else if (joystickWrapper.gamepad1GetDRight()) {\n            slidePos = 4000;\n            if (guideServo.getPosition() < 0.65) {\n                guideServo.setPosition(.7);\n            }\n        }\n\n\n        if (slidePos<5) {\n            slidePos = 5;\n        }\n        if (slidePos>4000) {\n            slidePos = 4000;\n        }\n\n//        telemetry.addData(\"CurrentPosition:slide\", slideMotorRight.getCurrentPosition());\n//        telemetry.addData(\"TargetPosition:slide\", slideMotorRight.getTargetPosition());\n//        telemetry.addData(\"CurrentPosition:rightServo\", rightServo.getPosition());\n//        telemetry.addData(\"CurrentPosition:leftServo\", leftServo.getPosition());\n//        telemetry.addData(\"TargetPosition\", slidePos);\n//        telemetr``y.addData(\"Limit?\", limit);\n//        telemetry.update();\n\n        if (slideMotorRight.getTargetPosition() == 4000) {\n            if (slideMotorRight.getCurrentPosition()> 4000-slowRange) {\n                slideMotorRight.setPower(.25);\n                slideMotorLeft.setPower(.25);\n            } else {\n                slideMotorRight.setPower(1);\n                slideMotorLeft.setPower(1);\n            }\n        } else if (slideMotorRight.getTargetPosition() == 2900) {\n            if (slideMotorRight.getCurrentPosition()>2900-slowRange && slideMotorRight.getCurrentPosition() < 2900+slowRange) {\n                slideMotorRight.setPower(.25);\n                slideMotorLeft.setPower(.25);\n            } else {\n                slideMotorRight.setPower(1);\n                slideMotorLeft.setPower(1);\n            }\n        } else if (slideMotorRight.getTargetPosition() == 1670) {\n            if (slideMotorRight.getCurrentPosition()> 1670-slowRange && slideMotorRight.getCurrentPosition() < 1670+slowRange) {\n                slideMotorRight.setPower(.25);\n                slideMotorLeft.setPower(.25);\n            } else {\n                slideMotorRight.setPower(1);\n                slideMotorLeft.setPower(1);\n            }\n        } else {\n            slideMotorRight.setPower(1);\n            slideMotorLeft.setPower(1);\n        }\n        //slideMotorRight.setPower(1); //COMMENT THIS OUT IF WE ADD THE LOOPS PRIOR\n        //slideMotorLeft.setPower(1);\n\n        if (slidePos != null) {\n            slideMotorRight.setTargetPosition(slidePos);\n            slideMotorLeft.setTargetPosition((int) ((slidePos)*leftSlideFactor));\n            slideMotorRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);\n            slideMotorLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);\n        }\n        //topMotor.setPower(-joystickWrapper.gamepad2GetLeftStickY());\n        telemetry.addData(\"Current Encoder\", slideMotorRight.getCurrentPosition());\n        telemetry.update();\n        if(joystickWrapper.gamepad1GetLeftBumperDown()) {\n            if (open) {\n                rightServo.setPosition(.80);\n                leftServo.setPosition(.20);\n                open = false;\n            } else {\n                rightServo.setPosition(.9);\n                leftServo.setPosition(0.1);\n                open = true;\n            }\n        }\n        if(joystickWrapper.gamepad1GetRightBumperDown()) {\n            if (guideOut) {\n                guideServo.setPosition(0);\n                guideOut = false;\n            } else {\n                guideServo.setPosition(.65);\n                guideOut = true;\n            }\n        }\n\n    }\n\n    public void UpdatePos() {\n        slideMotorRight.setPower(1);\n        slideMotorLeft.setPower(1);\n\n        slideMotorRight.setTargetPosition(slidePos);\n        slideMotorLeft.setTargetPosition(slidePos);\n\n        slideMotorRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);\n        slideMotorLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);\n    }\n\n    /*public double GetCurrentRotation(){\n        double n = (360*(bottomMotor.getCurrentPosition()/(MotorTicks*Ratio)))%360;\n        if(n>180){\n            return n-360;\n        }else return n;\n    }*/\n\n    /*public void RotateArm(double angle){\n        if(0>angle - GetCurrentRotation()){\n            bottomMotor.setPower(-1 * 0.25);\n            telemetry.addData(\"Input\", \"Negative\");\n        }else if (0<angle - GetCurrentRotation()){\n            bottomMotor.setPower(1 * 0.25);\n            telemetry.addData(\"Input\", \"Positive\");\n        }\n        telemetry.update();\n    }*/\n\n}\n\n\n\n\n\n/*\ninit 192.168.43.1:5555 at ip ADB\npush REABD library -- =: 17\nPOP REABD library -- =: 17(grade.strip().split(1::2))\n */
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/wrappers/ExtensionWrapperDD.java b/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/wrappers/ExtensionWrapperDD.java
+--- a/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/wrappers/ExtensionWrapperDD.java	(revision b5f3d043f3501e893c328965958169bb73176657)
++++ b/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/wrappers/ExtensionWrapperDD.java	(date 1682010044107)
+@@ -26,7 +26,7 @@
+     final int slideEncoderFactor = 20;
+ 
+     boolean limit = true;
+-
++    int deltaCount = 0;
+     boolean guideOut = true;
+ 
+ 
+@@ -59,10 +59,24 @@
+     int slowRange = 300;
+     int slideOldPos = 0;
+     public void PPArmMove(JoystickWrapper joystickWrapper) {
++        if (joystickWrapper.gamepad1GetRightBumperDown()) {
++            if (limit) {
++                limit = false;
++            } else {
++                limit = true;
++            }
++        }
+ 
+         slidePos = (int) (slideMotorRight.getTargetPosition() + (joystickWrapper.gamepad1GetRightTrigger()-joystickWrapper.gamepad1GetLeftTrigger()) * slideEncoderFactor);
+ 
+-
++        if (deltaCount == 0 && !limit) {
++            deltaCount=1;
++        }
++        if (deltaCount == 1 && limit) {
++            slideMotorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
++            slideMotorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
++            deltaCount = 0;
++        }
+        /* if (joystickWrapper.gamepad2GetDDown()) {
+             clawBase.setPower(-.5);
+             servoPos = clawBase.getPosition() - .01;
+@@ -120,13 +134,16 @@
+         }
+ 
+ 
+-        if (slidePos<5) {
++        if (slidePos<5 && limit) {
+             slidePos = 5;
+         }
+-        if (slidePos>4000) {
++        if (slidePos>4000 && limit) {
+             slidePos = 4000;
+         }
+ 
++        telemetry.addData("limit mode (true means limit IS there", limit);
++        telemetry.update();
++
+ //        telemetry.addData("CurrentPosition:slide", slideMotorRight.getCurrentPosition());
+ //        telemetry.addData("TargetPosition:slide", slideMotorRight.getTargetPosition());
+ //        telemetry.addData("CurrentPosition:rightServo", rightServo.getPosition());
+@@ -186,17 +203,9 @@
+                 open = true;
+             }
+         }
+-        if(joystickWrapper.gamepad1GetRightBumperDown()) {
+-            if (guideOut) {
+-                guideServo.setPosition(0);
+-                guideOut = false;
+-            } else {
+-                guideServo.setPosition(.65);
+-                guideOut = true;
+-            }
+-        }
++
++    }
+ 
+-    }
+ 
+     public void UpdatePos() {
+         slideMotorRight.setPower(1);
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"jbr-17\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision b5f3d043f3501e893c328965958169bb73176657)
++++ b/.idea/misc.xml	(date 1694872482373)
+@@ -1,4 +1,3 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
